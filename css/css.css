@@ -1,8 +1,8 @@
 html, body {
-    background-color: limegreen;
+    background-color: rgb(255, 255, 255);
     margin: 0px;
     font-family: "Avenir Medium", sans-serif;
-    color: white;
+    font-color: rgb(0, 0, 0);
     width: 100%;
     max-width: 100%;
     height: 100%;
@@ -20,36 +20,64 @@ html, body {
 /* use flexbox for horizontal positioning (replaces floating used in earlier versions) */
 header, footer, li {
     display: flex;
+
 }
 
 /* header and its parts */
 
 header {
-    background-color: rgb(60,60,60);
-    height: 50px;
+    background-color: rgb(255, 255, 255);
+    height: 45px;
     width: 100%;
     max-width: 100%;
     line-height: 50px;
+    border-bottom-color: rgb(200, 200, 200);
+    border-bottom-style: solid;
+    border-bottom-width: 5px;
 }
 
-header h2 {
-    margin: 0px;
-    font-weight: normal;
-    display: inline-block;
-    text-transform: uppercase;
+/* main part of the view */
+
+main {
+    width: 100%;
+    max-width: 100%;
+    background-color: hsla(0, 0%, 90%, 1);
+    height: calc(100% - (100px));
+    height: -webkit-calc(100% - 100px);
+    max-height: calc(100% - 50px);
+    max-height: -webkit-calc(100% - 50px);
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
-.button {
+footer {
+    background-color: rgb(255, 255, 255);
+    line-height: 50px;
+    height: 45px;
+    border-top-color: hsla(33, 100%, 50%, 1);
+    border-top-style: solid;
+    border-top-width: 5px;
+}
+
+
+
+button {
     height: 30px;
     width: 30px;
-    padding: 10px;
+    background-size: 25px 25px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 0pt;
+    background-color: hsla(0, 0%, 100%, 1);
     background-repeat: no-repeat;
-    background-size: 30px 30px;
     display: inline-block;
     background-origin: content-box;
     background-position: center center;
-    filter: invert(90%);
-    -webkit-filter: invert(90%);
+    border: 2px solid hsla(0, 0%, 100%, 1);
+    filter: opacity(40%);
+
 }
 
 .listeners-active .toggle-listeners {
@@ -59,6 +87,18 @@ header h2 {
     justify-content: flex-start;
 }
 
+.menu {
+    height: 30px;
+    width: 30px;
+    margin-left: 10px;
+    background-size: 30px, 30px;
+    background-image: url("./img/glyphicons/png/glyphicons-517-menu-hamburger.png");
+    float: left;
+    justify-content: flex-end;
+
+}
+
+
 .toggle-listeners {
     background-image: url("./img/glyphicons/png/glyphicons-301-microphone.png");
     background-size: 23px 30px;
@@ -66,11 +106,26 @@ header h2 {
     justify-content: flex-start;
 }
 
+header h1 {
+    margin: 0px;
+    font-size: 20pt;
+    line-height: 50px;
+    font-weight: normal;
+    display: inline-block;
+    margin-right: auto;
+
+}
+
+.tile-view {
+    background-image: url("./img/glyphicons/png/glyphicons-157-show-thumbnails.png");
+    justify-content: flex-end;
+}
+
 .new-item {
     background-image: url("./img/glyphicons/png/glyphicons-433-plus.png");
     /*float: right;*/
     justify-content: flex-end;
-    margin-left: auto;
+
 }
 
 .edit-item {
@@ -82,19 +137,19 @@ header h2 {
     margin-left: auto;
 }
 
-/* main part of the view */
 
-.maincontent {
-    width: 100%;
-    max-width: 100%;
-    background-color: rgb(45,45,45);
-    height: calc(100% - (50px));
-    height: -webkit-calc(100% - 50px);
-    max-height: calc(100% - 50px);
-    max-height: -webkit-calc(100% - 50px);
-    overflow-y: scroll;
-    overflow-x: hidden;
+.logout {
+    background-image: url("./img/glyphicons/png/glyphicons-388-log-out.png");
+    justify-content: flex-start;
 }
+
+
+.refresh {
+    background-image: url("./img/glyphicons/png/glyphicons-82-refresh.png");
+    margin-left: auto;
+    justify-content: flex-end;
+}
+
 
 /* list and list items */
 
@@ -105,11 +160,41 @@ ul {
 }
 
 li {
-    height: 60px;
+    background-color: rgb(255, 255, 255);
+    height: 120px;
     line-height: 60px;
-    font-size: 20pt;
+    font-size: 18pt;
     padding-left: 10px;
     border-bottom: 1px solid rgb(120,120,120);
+}
+
+ul:first-child{
+    margin-top: 25px;
+
+}
+
+
+li img{
+    height: 100px;
+    width: 100px;
+    margin-top: 10px;
+    margin-bottom: auto;
+    margin-left: 0px;
+    margin-right: 10px;
+    object-fit: cover;
+
+
+}
+
+
+h2{
+    margin: 0px;
+    font-size: 16pt;
+    line-height: 50px;
+    font-weight: normal;
+    display: block;
+    margin-right: auto;
+
 }
 
 /* disabled elements */
