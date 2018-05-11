@@ -1,96 +1,132 @@
 /**
- * Created by master on 01.03.16.
+ * Created by Anton Richter on 02.05.2018
  */
-var listenersSet;
 
-// a function that reacts to the selection of a list item
-function onListItemSelected(event) {
-    // check in which phase we are
-    if (event.eventPhase == Event.BUBBLING_PHASE) {
-        // a helper function that looks up the target li element of the event
-        function lookupEventTarget(el) {
-            if (el.tagName.toLowerCase() == "li") {
-                return el;
+window.addEventListener('DOMContentLoaded',initialiseView, true);
+
+var body, tilebtn, ul, addbtn, refreshbtn, litemplate;
+
+
+function initialiseView() {
+    // alert("initialise!");
+    tilebtn = document.getElementsByClassName("tile-view-btn") [0];
+    body = document.querySelector("body");
+    ul = document.getElementsByTagName("ul")[0];
+    addbtn = document.getElementsByClassName("new-item-btn") [0];
+    litemplate = document.getElementsByTagName("template") [0];
+    refreshbtn = document.getElementsByClassName("refresh-btn") [0];
+
+    // initially get items from json file:
+    xhrGet();
+
+    // fade to tile or list view:
+
+    tilebtn.onclick = function() {
+        body.classList.toggle("fade-out");
+        body.addEventListener("transitionend", ontransitionend);
+
+    }
+
+    function ontransitionend(){
+        body.classList.toggle("tile-view");
+        body.classList.toggle("fade-out");
+        body.removeEventListener("transitionend", ontransitionend);
+    }
+
+    // click on list-item dialog:
+
+    ul.onclick = onlistitemSelected;
+
+    function onlistitemSelected(event) {
+
+        var li = lookupLi(event.target);
+
+        if (li) {
+            if (event.target.tagName =="BUTTON"){
+                removeLi(li);
             }
-            else if (el.tagName.toLowerCase() == "ul") {
-                console.warn("lookupEventTarget(): we have already reached the list root!");
-                return null;
+            else {
+                alert("selected: " + li.querySelector("h2").textContent);
             }
-            else if (el.parentNode) {
-                return lookupEventTarget(el.parentNode);
-            }
+        } else {
+            alert("something went wrong!");
         }
+    }
 
-        // lookup the target of the event
-        var eventTarget = lookupEventTarget(event.target);
-        if (eventTarget) {
-            // from the eventTarget, we find out the title of the list item, which is simply the text content of the li element
-            showToast("selected: " + eventTarget.textContent);
+    // getting parent Li:
+
+    function lookupLi(el){
+        if (el.tagName == "LI") {
+            return el;
+        }
+        else if (el.tagName =="UL") {
+            console.error("lookupLi(): have reached list root", el);
+            return null;
+        }
+        else  if (el.parentNode){
+            return lookupLi(el.parentNode);
         }
         else {
-            showToast("list item target of event could not be determined!");
+            console.error("lookupLi(): something went wrong", el)
+            return null;
         }
     }
-}
 
-function toggleListeners() {
+    // "remove list item?" dialog:
 
-
-    // we set an onclick listener on the list view and check from which item the event was generated
-    // we also set a listener on the '+'-button that loads content from the server!
-    var ul = document.getElementsByTagName("ul")[0];
-    var newItem = document.querySelector(".new-item");
-
-    document.getElementsByTagName("body")[0].classList.toggle("listeners-active");
-
-    if (listenersSet) {
-        newItem.removeEventListener("click",loadNewItems);
-        newItem.setAttribute("disabled","disabled");
-        console.log("newItem.disabled: " + newItem.disabled);
-        ul.removeEventListener("click", onListItemSelected);
-        showToast("event listeners have been removed");
-        listenersSet = false;
+    function removeLi(li){
+        if (confirm("Do you want the selected item \""+ li.querySelector("h2").textContent
+            + "\"\nURL: \"" + li.querySelector("img").src + "\" to be removed?")){
+            ul.removeChild(li);
+        }
     }
-    else {
-        newItem.addEventListener("click",loadNewItems);
-        newItem.removeAttribute("disabled");
-        console.log("newItem.disabled: " + newItem.disabled);
-        ul.addEventListener("click", onListItemSelected);
-        showToast("event listeners have been set");
-        listenersSet = true;
-    }
-}
 
-/* show a toast and use a listener for transitionend for fading out */
-function showToast(msg) {
-    var toast = document.querySelector(".toast");
-    if (toast.classList.contains("active")) {
-        console.info("will not show toast msg " + msg + ". Toast is currently active, and no toast buffering has been implemented so far...");
-    }
-    else {
-        console.log("showToast(): " + msg);
-        toast.textContent = msg;
-        /* cleanup */
-        toast.removeEventListener("transitionend",finaliseToast);
-        /* initiate fading out the toast when the transition has finished nach Abschluss der Transition */
-        toast.addEventListener("transitionend", fadeoutToast);
-        toast.classList.add("shown");
-        toast.classList.add("active");
-    }
-}
+    // new-item-btn:
 
-function finaliseToast(event) {
-    var toast = event.target;
-    console.log("finaliseToast(): " + toast.textContent);
-    toast.classList.remove("active");
-}
+    addbtn.onclick = function(event) {
+        event.stopPropagation();
+        var newItemFactor = (Date.now() % 10) +1;
+        var newItem = {
+            name: "item" + newItemFactor,
+            owner:"lorempixel.com",
+            added: (new Date()).toLocaleDateString(),
+            numOfTags: 0,
+            src:"https://placeimg.com/100/" + newItemFactor * 100 + "/city"};
+        addNewListitem(newItem);
+    }
 
-/* trigger fading out the toast and remove the event listener  */
-function fadeoutToast(event) {
-    var toast = event.target;
-    console.log("fadeoutToast(): " + toast.textContent);
-    /* remove tranistionend listener */
-    toast.addEventListener("transitionend", finaliseToast);
-    toast.removeEventListener("transitionend", fadeoutToast);
-    toast.classList.remove("shown");
+    function addNewListitem(obj){
+        // alert("add new element!" + JSON.stringify(obj));
+
+        var li = document.importNode(litemplate.content, true);
+        li.querySelector("h2").textContent = obj.name;
+        li.querySelector(".owner").textContent = obj.owner;
+        li.querySelector("img").src = obj.src;
+        li.querySelector(".added").textContent = obj.added;
+        li.querySelector(".numOfTags").textContent = obj.numOfTags;
+
+        ul.appendChild(li);
+    }
+
+    //get items from json-file:
+
+
+    function xhrGet() {
+        xhr("GET", "data/listitems.json", null, function (xhrobj) {
+            // alert("success! Got: " + xhrobj.responseText);
+            var itemlist = JSON.parse(xhrobj.responseText);
+            itemlist.forEach(function (obj) {
+                addNewListitem(obj);
+            })
+        }, function () {
+            alert("Something went wrong");
+        })
+    }
+
+    // refresh-btn:
+
+    refreshbtn.onclick = function(){
+        ul.innerHTML ="";
+        xhrGet()
+    };
 }

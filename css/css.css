@@ -1,13 +1,14 @@
 html, body {
-    background-color: rgb(255, 255, 255);
+    background-color: hsla(0, 0%, 100%, 1);
     margin: 0px;
     font-family: "Avenir Medium", sans-serif;
-    font-color: rgb(0, 0, 0);
+    color: hsla(0, 0%, 0%, 1);
     width: 100%;
     max-width: 100%;
     height: 100%;
     max-height: 100%;
 }
+
 
 /* block text selection */
 
@@ -15,6 +16,7 @@ html, body {
     user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
+    box-sizing: border-box;
 }
 
 /* use flexbox for horizontal positioning (replaces floating used in earlier versions) */
@@ -39,6 +41,7 @@ header {
 /* main part of the view */
 
 main {
+    padding-top: 25px;
     width: 100%;
     max-width: 100%;
     background-color: hsla(0, 0%, 90%, 1);
@@ -48,6 +51,8 @@ main {
     max-height: -webkit-calc(100% - 50px);
     overflow-y: scroll;
     overflow-x: hidden;
+    opacity: 1.0;
+    transition: 1s;
 }
 
 footer {
@@ -80,10 +85,9 @@ button {
 
 }
 
-.listeners-active .toggle-listeners {
+.listeners-active .toggle-listeners-btn {
     background-image: url("./img/glyphicons/png/glyphicons-560-mic-mute.png");
     background-size: 23px 30px;
-    /*float: left;*/
     justify-content: flex-start;
 }
 
@@ -99,10 +103,9 @@ button {
 }
 
 
-.toggle-listeners {
+.toggle-listeners-btn {
     background-image: url("./img/glyphicons/png/glyphicons-301-microphone.png");
     background-size: 23px 30px;
-    /*float: left;*/
     justify-content: flex-start;
 }
 
@@ -116,35 +119,26 @@ header h1 {
 
 }
 
-.tile-view {
+.tile-view-btn {
     background-image: url("./img/glyphicons/png/glyphicons-157-show-thumbnails.png");
     justify-content: flex-end;
+    transition: 1s;
 }
 
-.new-item {
+.new-item-btn {
     background-image: url("./img/glyphicons/png/glyphicons-433-plus.png");
-    /*float: right;*/
     justify-content: flex-end;
 
 }
 
-.edit-item {
-    padding-top: 15px;
-    padding-bottom: 15px;
-    background-image: url("./img/glyphicons/png/glyphicons-31-pencil.png");
-    /*float: right;*/
-    justify-content: flex-end;
-    margin-left: auto;
-}
 
-
-.logout {
+.logout-btn {
     background-image: url("./img/glyphicons/png/glyphicons-388-log-out.png");
     justify-content: flex-start;
 }
 
 
-.refresh {
+.refresh-btn {
     background-image: url("./img/glyphicons/png/glyphicons-82-refresh.png");
     margin-left: auto;
     justify-content: flex-end;
@@ -168,65 +162,155 @@ li {
     border-bottom: 1px solid rgb(120,120,120);
 }
 
-ul:first-child{
-    margin-top: 25px;
-
-}
-
 
 li img{
-    height: 100px;
-    width: 100px;
+    height: 90px;
+    width: 90px;
     margin-top: 10px;
     margin-bottom: auto;
     margin-left: 0px;
     margin-right: 10px;
     object-fit: cover;
+    float: left;
+    display: inline;
 
+}
 
+.metadata{
+    /*border: 1px dashed blue;*/
+    display: inline;
+    float: right;
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.lineone{
+    /*border: 1px dashed gold;*/
+    display: block;
+    width: 100%;
+    height: 25px;
+
+}
+
+.owner{
+    /*border: 1px solid orange;*/
+    display: inline;
+    line-height: 100%;
+    float: left;
+}
+
+.added{
+    /*border: 1px solid red;*/
+    display: inline;
+    line-height: 100%;
+    float: right;
 }
 
 
 h2{
+    /*border: 1px dotted green;*/
     margin: 0px;
+    padding-top: 10px;
     font-size: 16pt;
-    line-height: 50px;
     font-weight: normal;
     display: block;
-    margin-right: auto;
-
-}
-
-/* disabled elements */
-[disabled] {
-    opacity: 0.5;
-}
-
-/* selected elements */
-li:active, .button:active  {
-    opacity: 0.1;
-}
-
-
-/* toast */
-
-.toast {
-    width: 60%;
-    position: fixed;
-    text-align: center;
-    bottom: 15%;
-    left: 20%;
-    background-color: white;
-    opacity: 0.0;
-    transition: opacity 0.5s, background-color 0.5s;
-    transition-delay: 0.5s;
-}
-
-.toast.shown {
-    background-color: gray;
-    color: white;
+    line-height: 100%;
+    float: left;
+    width: 100%;
+    height: 40px;
+    transition: 1s;
     opacity: 1.0;
-    /*transition-delay: 0s;*/
-    transition: opacity 1s, background-color 1s;
 }
+
+h3 {
+    /*border: 1px dashed red;*/
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 100%;
+    color: hsla(0, 0%, 70%, 1);
+    display: inline;
+    margin-top: auto;
+    margin-bottom: auto;
+    opacity: 1.0;
+    transition: 1s;
+}
+
+
+.linethree{
+    /*border: 1px dashed red;*/
+    display: block;
+    width: 100%;
+    height: 25px;
+    font-size: 12pt;
+    color: hsla(0, 0%, 70%, 1);
+}
+
+
+.numOfTags{
+    /*border: 1px solid green;*/
+    line-height: 100%;
+    display: inline;
+    float: left;
+    background-image: url("./img/glyphicons/png/glyphicons-174-play.png");
+    background-repeat: no-repeat;
+    justify-content: flex-start;
+    height: 18px;
+    background-size: 16px 16px;
+}
+
+.numOfTags h3{
+    margin-left: 20px;
+
+}
+
+
+.option-btn {
+    /*border: 1px dashed black;*/
+    background-image: url("./img/glyphicons/png/glyphicons-518-option-vertical.png");
+    object-fit: cover;
+    width: 6px;
+    height: 100%;
+    display: inline;
+    float: right;
+    line-height: 100%;
+    background-size: 6px 20px;
+    margin-right: 0px;
+}
+
+/* tile view*/
+
+.fade-out main {
+    opacity: 0.0;
+    transition: 2s;
+}
+
+.tile-view .tile-view-btn{
+    background-image: url("./img/glyphicons/png/glyphicons-115-list.png");
+    transition: 2s;
+}
+
+.tile-view .metadata{
+    display: none;
+
+}
+
+.tile-view img{
+    display: inline;
+    margin: 0px;
+
+}
+
+.tile-view li{
+    display: inline;
+    padding-top: 80px;
+    margin: 0px;
+    width: auto;
+    background-color: white;
+    /*border: 1px solid green;*/
+}
+
 
