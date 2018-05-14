@@ -75,8 +75,8 @@ function initialiseView() {
     // "remove list item?" dialog:
 
     function removeLi(li){
-        if (confirm("Do you want the selected item \""+ li.querySelector("h2").textContent
-            + "\"\nURL: \"" + li.querySelector("img").src + "\" to be removed?")){
+        if (confirm("Do you want to remove the selected item \""+ li.querySelector("h2").textContent
+            + "\",\n" + li.querySelector(".img").style.backgroundImage + "?")){
             ul.removeChild(li);
         }
     }
@@ -96,12 +96,13 @@ function initialiseView() {
     }
 
     function addNewListitem(obj){
-        // alert("add new element!" + JSON.stringify(obj));
+
+
 
         var li = document.importNode(litemplate.content, true);
         li.querySelector("h2").textContent = obj.name;
         li.querySelector(".owner").textContent = obj.owner;
-        li.querySelector("img").src = obj.src;
+        li.querySelector(".img").setAttribute("style","background-image: url('" + obj.src + "')");
         li.querySelector(".added").textContent = obj.added;
         li.querySelector(".numOfTags").textContent = obj.numOfTags;
 
@@ -113,7 +114,7 @@ function initialiseView() {
 
     function xhrGet() {
         xhr("GET", "data/listitems.json", null, function (xhrobj) {
-            // alert("success! Got: " + xhrobj.responseText);
+
             var itemlist = JSON.parse(xhrobj.responseText);
             itemlist.forEach(function (obj) {
                 addNewListitem(obj);
@@ -127,6 +128,6 @@ function initialiseView() {
 
     refreshbtn.onclick = function(){
         ul.innerHTML ="";
-        xhrGet()
+        xhrGet();
     };
 }

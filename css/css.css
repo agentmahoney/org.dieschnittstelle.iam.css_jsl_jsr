@@ -41,12 +41,12 @@ header {
 /* main part of the view */
 
 main {
-    padding-top: 25px;
+
     width: 100%;
     max-width: 100%;
-    background-color: hsla(0, 0%, 90%, 1);
+
     height: calc(100% - (100px));
-    height: -webkit-calc(100% - 100px);
+    height: -webkit-calc(100% - 90px);
     max-height: calc(100% - 50px);
     max-height: -webkit-calc(100% - 50px);
     overflow-y: scroll;
@@ -57,11 +57,12 @@ main {
 
 footer {
     background-color: rgb(255, 255, 255);
-    line-height: 50px;
+
     height: 45px;
     border-top-color: hsla(33, 100%, 50%, 1);
     border-top-style: solid;
     border-top-width: 5px;
+
 }
 
 
@@ -69,6 +70,7 @@ footer {
 button {
     height: 30px;
     width: 30px;
+    padding: 0px;
     background-size: 25px 25px;
     margin-top: auto;
     margin-bottom: auto;
@@ -80,8 +82,17 @@ button {
     display: inline-block;
     background-origin: content-box;
     background-position: center center;
-    border: 2px solid hsla(0, 0%, 100%, 1);
+    border: 0px solid hsla(0, 0%, 100%, 1);
     filter: opacity(40%);
+
+    display: -webkit-flex;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
 
 }
 
@@ -93,12 +104,13 @@ button {
 
 .menu {
     height: 30px;
-    width: 30px;
+    width: 25px;
     margin-left: 10px;
     background-size: 30px, 30px;
     background-image: url("./img/glyphicons/png/glyphicons-517-menu-hamburger.png");
     float: left;
     justify-content: flex-end;
+
 
 }
 
@@ -110,12 +122,22 @@ button {
 }
 
 header h1 {
-    margin: 0px;
+
+    margin-left: 0px;
+    margin-right: auto;
     font-size: 20pt;
     line-height: 50px;
     font-weight: normal;
     display: inline-block;
-    margin-right: auto;
+
+    display: -webkit-flex;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
 
 }
 
@@ -128,6 +150,7 @@ header h1 {
 .new-item-btn {
     background-image: url("./img/glyphicons/png/glyphicons-433-plus.png");
     justify-content: flex-end;
+    margin-right: 10px;
 
 }
 
@@ -141,6 +164,8 @@ header h1 {
 .refresh-btn {
     background-image: url("./img/glyphicons/png/glyphicons-82-refresh.png");
     margin-left: auto;
+    margin-top: auto;
+    margin-bottom: auto;
     justify-content: flex-end;
 }
 
@@ -153,164 +178,217 @@ ul {
     padding: 0px;
 }
 
+ul:first-child{
+    border-top: 25px solid hsla(0, 0%, 90%, 1);
+}
+
 li {
     background-color: rgb(255, 255, 255);
-    height: 120px;
-    line-height: 60px;
-    font-size: 18pt;
-    padding-left: 10px;
-    border-bottom: 1px solid rgb(120,120,120);
-}
 
-
-li img{
     height: 90px;
-    width: 90px;
-    margin-top: 10px;
-    margin-bottom: auto;
+    border-bottom: 1px solid hsla(0, 0%, 80%, 1);
+    font-size: 15px;
+    padding-left: 10px;
+    display: grid;
+    grid-template-areas:
+            'foto owner added'
+            'foto titel titel'
+            'foto play loeschen';
+    grid-template-columns: 90px auto auto;
+    grid-template-rows: auto auto auto;
+}
+
+
+li .img{
+
+    display:grid;
+    grid-area: foto;
+    border: none;
+
+    height: 75px;
+    width: 75px;
+    margin-top: 7.5px;
     margin-left: 0px;
-    margin-right: 10px;
+
     object-fit: cover;
-    float: left;
-    display: inline;
-
-}
-
-.metadata{
-    /*border: 1px dashed blue;*/
-    display: inline;
-    float: right;
-    width: 100%;
-    height: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-right: 10px;
-}
-
-.lineone{
-    /*border: 1px dashed gold;*/
-    display: block;
-    width: 100%;
-    height: 25px;
+    border: none;
+    outline: none;
 
 }
 
 .owner{
-    /*border: 1px solid orange;*/
-    display: inline;
-    line-height: 100%;
-    float: left;
+    display: grid;
+    grid-area: owner;
+    margin-top:5px;
 }
 
 .added{
-    /*border: 1px solid red;*/
-    display: inline;
-    line-height: 100%;
+    display: grid;
+    grid-area: added;
+    margin-right: 10px;
+    margin-top:5px;
+    margin-left: auto;
     float: right;
+    justify-content: flex-end;
 }
 
 
 h2{
-    /*border: 1px dotted green;*/
+    display: grid;
+    grid-area: titel;
     margin: 0px;
-    padding-top: 10px;
-    font-size: 16pt;
+    padding: 0Px;
     font-weight: normal;
-    display: block;
-    line-height: 100%;
-    float: left;
-    width: 100%;
-    height: 40px;
-    transition: 1s;
-    opacity: 1.0;
+    font-size: 12pt;
+    text-transform: uppercase;
 }
+
+.play {
+    border:none;
+    font-size:0;
+    height: 30px;
+    width: 30px;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    filter: invert(60%); /*Farben invertieren*/
+    webkit-filter: invert(60%);
+
+    background-origin: content-box;
+    padding: 0;
+
+    outline: none;
+    border-style: none;
+
+
+    display: grid;
+    grid-area: play;
+    background-image: url(./img/glyphicons/png/glyphicons-174-play.png);
+    background-size: 15px 15px;
+
+
+}
+
 
 h3 {
-    /*border: 1px dashed red;*/
-    font-size: 12pt;
-    font-style: normal;
+    margin: 0px;
+    padding: 0Px;
     font-weight: normal;
-    line-height: 100%;
-    color: hsla(0, 0%, 70%, 1);
-    display: inline;
-    margin-top: auto;
-    margin-bottom: auto;
-    opacity: 1.0;
-    transition: 1s;
-}
-
-
-.linethree{
-    /*border: 1px dashed red;*/
-    display: block;
-    width: 100%;
-    height: 25px;
+    font-size: 15pt;
+    color: grey;
     font-size: 12pt;
-    color: hsla(0, 0%, 70%, 1);
 }
 
 
 .numOfTags{
-    /*border: 1px solid green;*/
-    line-height: 100%;
-    display: inline;
-    float: left;
-    background-image: url("./img/glyphicons/png/glyphicons-174-play.png");
-    background-repeat: no-repeat;
-    justify-content: flex-start;
-    height: 18px;
-    background-size: 16px 16px;
+    display: inline-block;
+    grid-area: play;
+    margin-left: 25px;
 }
 
-.numOfTags h3{
-    margin-left: 20px;
-
-}
 
 
 .option-btn {
-    /*border: 1px dashed black;*/
-    background-image: url("./img/glyphicons/png/glyphicons-518-option-vertical.png");
+    border: 0px dashed black;
+    display: grid;
+    grid-area: loeschen;
+    background-image: url('./img/glyphicons/png/glyphicons-518-option-vertical.png');
+    background-position: center;
+    width: 20px;
+    height: 20px;
+
     object-fit: cover;
-    width: 6px;
-    height: 100%;
-    display: inline;
-    float: right;
-    line-height: 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    filter: invert(60%); /*Farben invertieren*/
+    webkit-filter: invert(60%);
     background-size: 6px 20px;
-    margin-right: 0px;
+
+    padding: 0;
+    margin-top:0;
+    margin-left: auto;
+    margin-right: 3px;
 }
 
-/* tile view*/
+/* ---------- tile view --------------*/
 
 .fade-out main {
     opacity: 0.0;
     transition: 2s;
 }
 
+
+
 .tile-view .tile-view-btn{
     background-image: url("./img/glyphicons/png/glyphicons-115-list.png");
     transition: 2s;
 }
 
-.tile-view .metadata{
-    display: none;
-
-}
-
-.tile-view img{
-    display: inline;
-    margin: 0px;
-
-}
-
 .tile-view li{
-    display: inline;
-    padding-top: 80px;
-    margin: 0px;
-    width: auto;
-    background-color: white;
-    /*border: 1px solid green;*/
+    display: inline-block;
+    border-bottom: none;
+    background-color: unset;
+    width: calc((100% - (16px * 3)) / 3);
+    position: relative;
+    line-height: 100%;
+    height: auto;
+    margin-left: 8px;
+    margin-right: 0px;
+    padding-left: 0px;
+    margin-top: 0px;
+    margin-bottom: 8px;
+
+}
+
+.tile-view ul:first-child{
+    padding-top: 8px;
 }
 
 
+@media (min-width: 600px){
+    .tile-view li{
+        width: calc((100% - (16px * 4)) / 4);
+    }
+}
+
+@media (min-width: 800px){
+    .tile-view li{
+        width: calc((100% - (16px * 5)) / 5);
+    }
+}
+
+.tile-view li:before{
+    content: "";
+    padding-top: 100%;
+    display: block;
+}
+
+.tile-view li h2, .tile-view li h3, .tile-view li .play{
+    display: none;
+    margin: 0px;
+}
+
+
+
+.tile-view li button{
+    position: absolute;
+    right: 0px;
+    bottom: 5px;
+}
+
+.tile-view .img{
+    display: inline-block;
+    position: absolute;
+    top:0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: auto;
+    height: auto;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
